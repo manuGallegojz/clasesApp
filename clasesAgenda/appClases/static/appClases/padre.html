@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>  
+
+  {% load static %}
+  
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  
+  <title>Pagina de Clases</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'appClases/css/bootstrap.css' %}" />
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'appClases/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'appClases/css/responsive.css' %}" rel="stylesheet" />
+
+  <script src="{% static 'appClases/js/jquery-3.4.1.min.js' %}"></script>
+  <script src="{% static 'appClases/js/bootstrap.js' %}"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</head>
+
+<body>
+
+    
+    <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+      <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="index.html">
+              <img src="{% static 'appClases/assets/logo.png' %}" alt="" />
+              <span>
+              Clases Particulares Siu
+              </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <divs>
+              <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="registro.html">Registro </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="otros.html"> Otros </a>
+              </li>
+              </ul>
+          </divs>
+
+          </nav>
+      </div>
+      </header>
+  </div>
+  
+  <!-- Contenido que cambia -->
+
+  {% block contenido %}
+
+  {% endblock %}
+
+
+  <!-- footer section -->
+  <footer class="container-fluid footer_section ">
+    <div class="container">
+      <p>
+        Hacer inicios de sesion!
+      </p>
+    </div>
+  </footer>
+  
+</body>
+<script>
+  $(document).ready(function() {
+    
+    infoClase = {
+          "Materia": "",
+          "Tema": "",
+          "Dia": "",
+          "Horario": ""
+        }
+
+    seleccionMateria();
+
+    function seleccionMateria() {
+      const temasPorMateria = {
+        "Matematicas": ["Trigonometría", "Fracciones", "Cálculo con Números Negativos"],
+        "Circuitos Electrónicos": ["Opción 1", "Opción 2", "Opción 3"],
+        "Técnicas Digitales": ["Opción 1", "Opción 2", "Opción 3"],
+        "Amesea": ["Opción 1", "Opción 2", "Opción 3"],
+        "Física": ["Opción 1", "Opción 2", "Opción 3"],
+        "Programación en C": ["Opción 1", "Opción 2", "Opción 3"],
+        "Programación en Python": ["Opción 1", "Opción 2", "Opción 3"]
+      };  // objeto de las materias y los temas
+
+      const materias = Object.keys(temasPorMateria); // vector de los nombres de las materias
+      let htmlSeleccionMateria = `<option selected>Materia</option>`; // html titulo de materia
+
+      materias.forEach(materia => {
+        htmlSeleccionMateria += `<option value="${materia}">${materia}</option>`; // se coloca cada opcion de materia recorriendo el vector
+      });
+
+      $(".form-select").eq(0).html(htmlSeleccionMateria); // se escribe la variable en el html
+
+      $(".form-select").eq(0).on("change", function () { // cada vez que se cambia el input, ocurre algo
+        const materiaSeleccionada = $(this).val(); // se toma el valor del input que sería en tipo string
+        const temas = temasPorMateria[materiaSeleccionada] || []; // se selecciona el string para regresar los temas correspondientes
+        infoClase["Materia"] = materiaSeleccionada;
+        mostrarTemas(temas); // se muestran los temas para esa materia
+      });
+      
+      mostrarTemas([]); // Inicialmente vacío
+    }
+
+    function mostrarTemas(temas) {
+      let htmlSeleccionTema = `<option value="Tema" selected>Tema</option>`; // mensaje inicial del tema
+      temas.forEach((tema, i) => { // se recorre el vector y se muestran los temas
+        htmlSeleccionTema += `<option value="${tema}">${tema}</option>`;
+      });
+      $(".form-select").eq(1).html(htmlSeleccionTema); // se escriben en el input
+
+      $(".form-select").eq(1).on("change", function () { // se accede al valor del input
+        const temaSeleccionado = $(this).val();
+        infoClase["Tema"] = temaSeleccionado;
+        $(this).val() != "Tema" ?  seleccionFecha(true) : seleccionFecha(false);
+      });
+      
+      seleccionFecha(false); // normalmente apagado
+      
+    }
+
+    function seleccionFecha(mostrar){
+
+      let listaHorarios = {
+        "Domingo": [16,17,18,19,20], //0
+        "Lunes" : [16,17,18,19], //1
+        "Martes" : [10,11,12,13,15,16,17,18,19], //2
+        "Miercoles" : [18,19], //3
+        "Jueves" : [], //4
+        "Viernes" : [10,11,12,13,15,16,17,18,19], //5
+        "Sabado": [17,18,19] //6
+      }
+
+      const dias = Object.keys(listaHorarios);
+
+      //mostrar fechas
+      let calendar = $(".fechas").flatpickr({
+        "enable": [
+          function(date) {
+              // return true to disable
+              if(mostrar){
+                return true;
+              }else{
+                mostrarHorarios([ ]);
+                return false;
+              }
+          }
+      ],
+        inline: true,
+        // esta linea desactiva ciertos días: disable: ["2025-01-30", "2025-02-21", "2025-03-08", new Date(2025, 4, 9) ],
+        minDate: "today",
+        maxDate: new Date().fp_incr(14), // 14 days from now
+        onChange: function(selectedDates, dateStr, instance) {
+          dias.forEach((element, e)=>{
+            if(e == selectedDates[0].getDay()){
+              infoClase["Dia"] = selectedDates[0];
+              mostrarHorarios(listaHorarios[element]);
+            }
+          })
+      }, 
+      locale: {
+        firstDayOfWeek: 1,
+        weekdays: {
+          shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+          longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],         
+        }, 
+        months: {
+          shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+          longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        },
+      }
+      });
+
+
+    }
+    
+    function mostrarHorarios(horarios){
+
+      let contenedorHorarios = $(".seleccionHorarios").eq(0);
+      contenedorHorarios.html(" ");
+      let textoHorarios = " ";
+
+      for(let i = 0 ; i < horarios.length ; i++ ){
+        textoHorarios += `<input type="radio" name="horario" value="${horarios[i]}">
+                          <label for="horario">${horarios[i]}:00 hs</label><br>`
+      }
+  
+      contenedorHorarios.append(textoHorarios);
+      $(".seleccionHorarios").eq(0).on("change", function () {
+        const horarioSeleccionado = $('input[name="horario"]:checked', this);
+        infoClase["Horario"] = horarioSeleccionado.val();
+        enviarInfo(false);
+    
+    });
+    enviarInfo(true);
+    }
+
+    function enviarInfo(mostrarBoton){
+      let botonEnviar = $("#botonEnviar"); 
+      botonEnviar.prop( "disabled", mostrarBoton );
+
+      botonEnviar.off("click").on("click", ()=>{
+        console.log(infoClase);
+      })
+
+    }
+
+  });
+</script>
+
+</html>

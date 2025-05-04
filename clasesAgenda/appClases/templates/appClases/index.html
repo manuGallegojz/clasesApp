@@ -1,0 +1,28 @@
+{% extends "appClases/padre.html"  %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+    <section class="mt-5 text-center">
+        <h1>Agenda</h1>
+        <label for="seleccionMateria">Seleccione la materia</label>
+        <select class="form-select" name="seleccionMateria" aria-label="Default select example"></select>
+        <label for="seleccionTema">Seleccione la materia</label>
+        <select class="form-select" name="seleccionTema" aria-label="Default select exvmple"></select>
+    </section>
+
+    <section class="mt-5 d-flex justify-content-center">
+        <div class="fechas"></div>
+        <div class="col-3 ml-3 horarios card card-body">
+            <h5>Selección de horarios:</h5>
+            <div class="d-flex flex-column justify-content-between">
+                <form class="seleccionHorarios">
+                </form>
+                <input id="botonEnviar" type="submit" value="Enviar">    
+            </div>
+            </div>
+    </section>
+
+  {% endblock %}
