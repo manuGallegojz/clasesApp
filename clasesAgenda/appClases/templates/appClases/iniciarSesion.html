@@ -1,0 +1,22 @@
+{% extends "appClases/padre.html"  %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section class="container mt-5">
+    {{mensaje}}
+    <form action="" method="POST"> {% csrf_token %}
+
+        <table>
+            {{form1.as_p}}
+        </table>
+        
+        <input class="form-control" type="submit" value="Enviar">
+
+    </form>
+        
+</section>
+
+
+{% endblock %}

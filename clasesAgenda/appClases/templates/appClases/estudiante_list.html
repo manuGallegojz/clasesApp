@@ -1,0 +1,28 @@
+{% extends "appClases/padre.html"  %}
+
+{% load static %}
+
+{% block contenido %}
+
+
+    <section class="mt-5 text-center">
+        
+        {% for alumno in object_list %}
+
+        <li>{{alumno.nombre}}</li>
+
+        <button>
+            <a href="{% url 'EliminarAlumno' alumno.id %}">Eliminar</a>
+            
+        </button>
+        
+        <button>
+            <a href="{% url 'EditarAlumno' alumno.id %}">Editar</a>
+        </button>
+
+        {% endfor %}
+
+
+    </section>
+
+  {% endblock %}

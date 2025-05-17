@@ -42,7 +42,7 @@
       <header class="header_section">
       <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{% url 'Inicio' %}">
               <img src="{% static 'appClases/assets/logo.png' %}" alt="" />
               <span>
               Clases Particulares Siu
@@ -52,16 +52,28 @@
               <span class="navbar-toggler-icon"></span>
           </button>
 
-          <divs>
+          <div>
               <ul class="navbar-nav">
               <li class="nav-item">
-                  <a class="nav-link" href="registro.html">Registro </a>
+                  <a class="nav-link" href="{% url 'Registro' %}">Registro </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="otros.html"> Otros </a>
+                  <a class="nav-link" href="{% url 'MuestraAlumnos' %}"> Mostrar Alumnos </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'inicioSesion' %}"> Iniciar Sesion </a>
+            </li>
+            <li class="nav-item">
+                <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit">Logout</button>
+                </form>
+            </li>
+            <li class="nav-item">
+              {{mensaje}}
+          </li>
               </ul>
-          </divs>
+          </div>
 
           </nav>
       </div>
